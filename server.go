@@ -3,6 +3,7 @@ package ut
 import (
 	"encoding/binary"
 	"errors"
+	"io"
 	"net"
 	"sync"
 	"time"
@@ -239,10 +240,9 @@ func (s *NetConnection) Rec(msg *Message) error {
 		return errors.New("msgchan is nil")
 	}
 	Channel_Get(s, msg)
-	DebugLog.Println(*msg)
-	// if msg.Content == nil {
-	// 	return io.EOF
-	// }
+	if msg.Content == nil {
+		return io.EOF
+	}
 	return nil
 }
 
